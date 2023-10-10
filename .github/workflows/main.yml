@@ -36,14 +36,13 @@ jobs:
         dotnet-version: 7.0.x
  
     - name: Build and Pack NuGet package with versioning
-      run: dotnet pack ${{ vars.PROJECT_PATH }}.csproj -p:Version='${{ steps.gitversion.outputs.SemVer }}' -c Release
+      run: dotnet pack ./src/${{ vars.PROJECT_NAME }}/${{ vars.PROJECT_NAME }}.csproj -p:Version='${{ steps.gitversion.outputs.SemVer }}' -c Release
 
     - name: Upload NuGet package to GitHub
       uses: actions/upload-artifact@v3.1.3
       with:
         name: nugetPackage
-        path: ${{ vars.PROJECT_PATH }}/bin/Release/*.nupkg
-
+        path: /home/runner/work/${{ vars.PROJECT_NAME }}/${{ vars.PROJECT_NAME }}/src/${{ vars.PROJECT_NAME }}/bin/Release//*.nupkg
   release:
     runs-on: ubuntu-latest    
     needs: build
