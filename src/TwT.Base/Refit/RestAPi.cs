@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Headers;
+using System.Reflection;
 using Microsoft.Extensions.Logging;
 using Refit;
 using TwT.Base.Exceptions;
@@ -51,17 +52,19 @@ namespace TwT.Base.Refit
       var client = new HttpClient
       {
         BaseAddress = new Uri(configuration.BaseUrl),
-        DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower,
-        Timeout = default
+        DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower
       };
-
-      foreach (var header in configuration.Headers)
-      {
-        client.DefaultRequestHeaders.Add(header.Key, header.Value);
-      }
-
+      
       client.DefaultRequestHeaders.UserAgent.Clear();
-      client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(configuration.UserAgent));
+      client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(new ProductHeaderValue(configuration.UserAgent, Assembly.GetExecutingAssembly().GetName().Version.ToString())));
+
+      if (configuration.Headers != null && configuration.Headers.Any())
+      {
+        foreach (var header in configuration.Headers)
+        {
+          client.DefaultRequestHeaders.Add(header.Key, header.Value);
+        }
+      }
 
       return RestService.For<TApi>(client, new RefitSettings { ExceptionFactory = HandleException! });
     }

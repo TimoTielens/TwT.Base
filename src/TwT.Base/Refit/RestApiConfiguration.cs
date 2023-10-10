@@ -2,7 +2,7 @@
 
 namespace TwT.Base.Refit
 {
-	internal class RestApiConfiguration : TwTConfigurationBase, IRestApiConfiguration
+	public class RestApiConfiguration : TwTConfigurationBase, IRestApiConfiguration
   {
     /// <summary>
     /// Name of the useragent that needs to be added to the request
@@ -27,10 +27,10 @@ namespace TwT.Base.Refit
 		{
 			var errors = new List<string>();
 
-      if (!string.IsNullOrWhiteSpace(UserAgent))
+      if (string.IsNullOrWhiteSpace(UserAgent))
         errors.Add($"{nameof(UserAgent)} cannot be null");
 
-      if (!string.IsNullOrWhiteSpace(BaseUrl))
+      if (string.IsNullOrWhiteSpace(BaseUrl))
         errors.Add($"{nameof(BaseUrl)} cannot be null");
 
       return errors;

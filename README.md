@@ -110,3 +110,31 @@ All the exceptions should inherited from *TwTException* so that it can be easly 
       }
 ```
 
+### API
+This package has a defualt wrapper for https://github.com/reactiveui/refit that can be used for setting up API clients
+
+```javascript
+var config = new RestApiConfiguration()
+      {
+        UserAgent = "test",
+        BaseUrl = "https://google.nl",
+        Headers = null
+      };
+
+      System.Console.WriteLine($"Config has '{config.ValidationErrorCount}' errors");
+
+      try
+      {
+        var api = new RestAPi<IGoogleApi>(config, NullLogger<RestAPi<IGoogleApi>>.Instance, checker);
+        var foo = api.Endpoint.Test().Result;
+      }
+      catch (Exception e)
+      {
+        System.Console.WriteLine(e);
+      }
+
+    private static EndpointReachAbility checker(IGoogleApi api)
+    {
+      return EndpointReachAbility.IsUp;
+    }
+```

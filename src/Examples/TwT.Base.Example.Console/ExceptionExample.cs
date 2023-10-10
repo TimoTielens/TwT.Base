@@ -2,10 +2,9 @@
 
 namespace TwT.Base.Example.Console
 {
-  internal class FileName
+  internal class ExceptionExample
   {
-
-    public void foo()
+    public void Example()
     {
       try
       {
