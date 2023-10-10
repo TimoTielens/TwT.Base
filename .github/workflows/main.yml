@@ -3,7 +3,7 @@ name: Build & Publish NuGet to GitHub Registry
 on:
   push:
     branches: [main, develop]
-      
+
 jobs:
   build:
     runs-on: ubuntu-latest    
@@ -15,20 +15,7 @@ jobs:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0 #fetch-depth is needed for GitVersion
-        
-    #Install and calculate the new version with GitVersion  
-    - name: Install GitVersion
-      uses: gittools/actions/gitversion/setup@v0.10.2
-      with:
-        versionSpec: 5.x
-    - name: Determine Version
-      uses: gittools/actions/gitversion/execute@v0.10.2
-      id: gitversion # step id used as reference for output values
-    - name: Display GitVersion outputs
-      run: |
-        echo "Version: ${{ steps.gitversion.outputs.SemVer }}"
-        echo "CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"
-    
+
 # Build/pack the project
     - name: Setup .NET
       uses: actions/setup-dotnet@v3.2.0
@@ -36,7 +23,7 @@ jobs:
         dotnet-version: 7.0.x
  
     - name: Build and Pack NuGet package with versioning
-      run: dotnet pack ./src/${{ vars.PROJECT_NAME }}/${{ vars.PROJECT_NAME }}.csproj -p:Version='${{ steps.gitversion.outputs.SemVer }}' -c Release
+      run: dotnet pack ./src/${{ vars.PROJECT_NAME }}/${{ vars.PROJECT_NAME }}.csproj -c Release
 
     - name: Upload NuGet package to GitHub
       uses: actions/upload-artifact@v3.1.3
