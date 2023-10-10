@@ -32,12 +32,8 @@ At the moment there are no concrete items for the roadmap. However at some point
 At least twice a year this package will be checked for secuirty issues. If a high security issues arises earlier, it will be patched directlly.
 
 ## Installation
-
-NUGET command here
-
 ```bash
-  npm install my-project
-  cd my-project
+dotnet add package TwT.Base 
 ```
 
 ## Usage/Examples
