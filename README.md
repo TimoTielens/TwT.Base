@@ -1,5 +1,5 @@
-
 # TwT.Base
+[![Build & Publish NuGet to GitHub Registry](https://github.com/TimoTielens/TwT.Base/actions/workflows/main.yml/badge.svg)](https://github.com/TimoTielens/TwT.Base/actions/workflows/main.yml)
 
 Base package that will be used by all the other projects from me. This base package isn't intended to have all the possible usable code that there is. 
 It just contains the most used logic or logic that I think should always used (E.G. interface for configurations).
